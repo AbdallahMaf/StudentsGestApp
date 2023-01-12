@@ -13,9 +13,9 @@ public class Student {
 	}
 	
 	//Constructor
-	public Student(String nom, String prenom, String email, String date, String classe) {
+	public Student(int id, String nom, String prenom, String email, String date, String classe) {
 		super();
-		//this.id = id;
+		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
