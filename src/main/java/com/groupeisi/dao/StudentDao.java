@@ -1,5 +1,9 @@
 package com.groupeisi.dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class StudentDao {
 
 	public String url = "jdbc:mysql://localhost:3306/studentgest?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -17,7 +21,23 @@ public class StudentDao {
 	private static final String DELETE_STUDENT_SQL = "DELETE FROM students WHERE id =?;";
 	
 	private static final String UPDATE_STUDENT_SQL = "UPDATE students SET nom = ?, prenom = ?, email = ?, date = ?, classe = ?;";
+
+	public StudentDao() {
+		
+	}
 	
-	
+	protected Connection getConnection() {
+		Connection connection = null;
+		try {
+			Class.forName(jdbcDriver);
+			connection = DriverManager.getConnection(url, username, password);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return connection;
+	}
+
 	
 }
