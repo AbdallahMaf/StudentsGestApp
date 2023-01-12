@@ -7,5 +7,8 @@ public class StudentDao {
 	public String password = "";
 	public String jdbcDriver = "com.mysql.jdbc.Driver";
 	
+	private static final String INSERT_STUDENT_SQL = "INSERT INTO student" + " (name, )";
+	
+	
 	
 }
