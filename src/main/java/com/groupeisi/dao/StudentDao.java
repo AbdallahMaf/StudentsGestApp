@@ -3,10 +3,12 @@ package com.groupeisi.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Iterator;
 
 import com.groupeisi.entities.Student;
+import com.mysql.cj.protocol.Resultset;
 
 public class StudentDao {
 
@@ -48,20 +50,47 @@ public class StudentDao {
 		System.out.println(INSERT_STUDENT_SQL);
 	
         try(Connection cnx = getConnection();
-        	PreparedStatement pstm = cnx.prepareStatement(INSERT_STUDENT_SQL)) {
-            	pstm.setString(1, student.getNom());
-            	pstm.setString(2, student.getPrenom());
-            	pstm.setString(3, student.getEmail());
-            	pstm.setDate(4, java.sql.Date.valueOf(student.getDate()));
-            	pstm.setString(5, student.getClasse());
-                pstm.executeUpdate();
-            } catch (SQLException e) {
-				printSQLException(e);
-			}
-	}
+	        	PreparedStatement pstm = cnx.prepareStatement(INSERT_STUDENT_SQL)) {
+	            	pstm.setString(1, student.getNom());
+	            	pstm.setString(2, student.getPrenom());
+	            	pstm.setString(3, student.getEmail());
+	            	pstm.setDate(4, java.sql.Date.valueOf(student.getDate()));
+	            	pstm.setString(5, student.getClasse());
+	                pstm.executeUpdate();
+	            } catch (SQLException e) {	
+					printSQLException(e);
+				}
+		}
 
 	
 	//SELECT STUDENT BY ID
+	public Student selectStudent (int id) {
+		Student student = null;
+		try(Connection cnx = getConnection();
+				
+				PreparedStatement pstm = cnx.prepareStatement(SELECT_STUDENT_BY_ID);) {
+			pstm.setInt(1, id);
+			System.out.println(pstm);
+			
+			ResultSet rs = pstm.executeQuery();
+			
+			while(rs.next()) {
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String email = rs.getString("email");
+				String date = rs.getString("date");
+				String classe = rs.getString("classe");
+				student = new Student(id, nom, prenom, email, date, classe);
+			}
+			
+		} catch (SQLException e) {
+			printSQLException(e);
+		}
+		
+		return student;	
+	}
+	
+	
 	//SELECT ALL STUDENTS
 	//UPDATE STUDENT
 	//DELETE STUDENT
