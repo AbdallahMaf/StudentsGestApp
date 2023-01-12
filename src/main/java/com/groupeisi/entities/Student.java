@@ -1,7 +1,7 @@
 package com.groupeisi.entities;
 
 public class Student {
-	private String id;
+	private int id;
 	private String nom;
 	private String prenom;
 	private String email;
@@ -24,10 +24,10 @@ public class Student {
 	}
 	
 	//Getters and Setters
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
