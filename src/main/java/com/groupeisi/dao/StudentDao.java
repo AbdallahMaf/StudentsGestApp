@@ -2,7 +2,10 @@ package com.groupeisi.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import com.groupeisi.entities.Student;
 
 public class StudentDao {
 
@@ -39,5 +42,30 @@ public class StudentDao {
 		return connection;
 	}
 
+	//INSERT STUDENT
+	public void insertStudent (Student student) {
+		System.out.println(INSERT_STUDENT_SQL);
+	
+        try(Connection cnx = getConnection();
+        	PreparedStatement pstm = cnx.prepareStatement(INSERT_STUDENT_SQL)) {
+            	pstm.setString(1, student.getNom());
+            	pstm.setString(2, student.getPrenom());
+            	pstm.setString(3, student.getEmail());
+            	pstm.setDate(4, java.sql.Date.valueOf(student.getDate()));
+            	pstm.setString(5, student.getClasse());
+                pstm.executeUpdate();
+            } catch (SQLException e) {
+				printSQLException(e);
+			}
+	}
+
+	private void printSQLException(SQLException e) {
+		
+	}
+	
+	//SELECT STUDENT BY ID
+	//SELECT ALL STUDENTS
+	//UPDATE STUDENT
+	//DELETE STUDENT
 	
 }
