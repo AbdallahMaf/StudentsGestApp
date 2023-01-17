@@ -120,6 +120,26 @@ public class StudentDao {
 	
 	
 	//UPDATE STUDENT
+	public boolean updateStudent(Student student) throws SQLException {
+		boolean rowUpdated;
+		try (Connection cnx = getConnection();
+				
+				PreparedStatement statement = cnx.prepareStatement(UPDATE_STUDENT_SQL);){
+				System.out.println("Updated Student:" + statement);
+				statement.setString(1, student.getNom());
+				statement.setString(2, student.getPrenom());
+				statement.setString(3, student.getEmail());
+				statement.setString(4, student.getDate());
+				statement.setString(5, student.getClasse());
+				statement.setInt(6, student.getId());
+			
+				rowUpdated = statement.executeUpdate() > 0;
+		}
+		return rowUpdated;
+	}
+	
+	
+	
 	//DELETE STUDENT
 	
 	
