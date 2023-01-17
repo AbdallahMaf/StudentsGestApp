@@ -139,9 +139,17 @@ public class StudentDao {
 	}
 	
 	
-	
 	//DELETE STUDENT
-	
+	public boolean deleteStudent(int id) throws SQLException {
+		boolean rowDelelete;
+		try(Connection cnx = getConnection();
+				
+				PreparedStatement statement = cnx.prepareStatement(DELETE_STUDENT_SQL);){
+			statement.setInt(1, id);
+			rowDelelete = statement.executeUpdate() > 0;	
+		}
+		return rowDelelete;
+	}
 	
 	private void printSQLException(SQLException ex) {
 		for(Throwable e : ex) {
