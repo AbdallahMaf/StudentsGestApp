@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.groupeisi.entities.Student;
-import com.mysql.cj.protocol.Resultset;
 
 public class StudentDao {
 
@@ -92,6 +92,33 @@ public class StudentDao {
 	
 	
 	//SELECT ALL STUDENTS
+	public List<Student> selectAllStudents(){
+		List<Student> students = new ArrayList<>();
+		
+		try(Connection cnx = getConnection();
+				
+				PreparedStatement pstm = cnx.prepareStatement(SELECT_ALL_STUDENTS);){
+				System.out.println(pstm);
+			
+				ResultSet rs = pstm.executeQuery();
+				
+				while(rs.next()) {
+					int id = rs.getInt("id");
+					String nom = rs.getString("nom");
+					String prenom = rs.getString("prenom");
+					String email = rs.getString("email");
+					String date = rs.getString("date");
+					String classe = rs.getString("classe");
+					students.add(new Student( id, nom, prenom, email, date, classe));	
+				}
+			
+		}catch (Exception e) {
+			printSQLException(null);
+		}
+		return students;	
+	}
+	
+	
 	//UPDATE STUDENT
 	//DELETE STUDENT
 	
