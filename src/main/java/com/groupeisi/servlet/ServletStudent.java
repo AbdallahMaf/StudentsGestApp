@@ -60,6 +60,7 @@ public class ServletStudent extends HttpServlet {
 			break; 
 			
 		case "/delete":
+			deleteStudent(request, response);
 			break; 
 			
 		case "/edit":
@@ -90,6 +91,15 @@ public class ServletStudent extends HttpServlet {
 			studentDao.insertStudent(newStudent);
 	}
 	
-	
+	// Delete
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		try {
+			studentDao.deleteStudent(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("List");
+	}
 
 }
