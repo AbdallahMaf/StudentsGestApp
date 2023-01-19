@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import com.groupeisi.dao.StudentDao;
 import com.groupeisi.entities.Student;
@@ -60,15 +61,19 @@ public class ServletStudent extends HttpServlet {
 			break; 
 			
 		case "/delete":
+			deleteStudent(request, response);
 			break; 
 			
 		case "/edit":
+			showEditForm(request, response);
 			break; 
 			
 		case "/update":
+			updateStudent(request, response);
 			break; 
 			
 			default:
+				listStudent(request, response);
 				break;
 				
 		}
@@ -90,6 +95,59 @@ public class ServletStudent extends HttpServlet {
 			studentDao.insertStudent(newStudent);
 	}
 	
+	// Delete
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		try {
+			studentDao.deleteStudent(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("list");
+	}
 	
+	// Edit
+	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Student existingStudent;
+		try {
+			existingStudent = studentDao.selectStudent(id);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+			request.setAttribute("student", existingStudent);
+			dispatcher.forward(request, response);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Update
+		private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String email = request.getParameter("email");
+			String date = request.getParameter("date");
+			String classe = request.getParameter("classe");
+			
+			Student student = new Student(id, nom, prenom, email, date, classe);
+				studentDao.insertStudent(student);
+			response.sendRedirect("list");
+		}
+		
+	// Default
+		private void listStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			try {
+				List<Student> listStudent = studentDao.selectAllStudents();
+				request.setAttribute("listStudent", listStudent);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("student-list.jsp");
+				dispatcher.forward(request, response);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 
 }
