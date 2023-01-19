@@ -64,6 +64,7 @@ public class ServletStudent extends HttpServlet {
 			break; 
 			
 		case "/edit":
+			showEditForm(request, response);
 			break; 
 			
 		case "/update":
@@ -100,6 +101,21 @@ public class ServletStudent extends HttpServlet {
 			e.printStackTrace();
 		}
 		response.sendRedirect("List");
+	}
+	
+	// Edit
+	private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		Student existingStudent;
+		try {
+			existingStudent = studentDao.selectStudent(id);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+			request.setAttribute("student", existingStudent);
+			dispatcher.forward(request, response);			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
