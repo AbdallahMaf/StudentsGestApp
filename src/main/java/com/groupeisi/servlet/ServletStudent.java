@@ -68,6 +68,7 @@ public class ServletStudent extends HttpServlet {
 			break; 
 			
 		case "/update":
+			updateStudent(request, response);
 			break; 
 			
 			default:
@@ -100,7 +101,7 @@ public class ServletStudent extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("List");
+		response.sendRedirect("list");
 	}
 	
 	// Edit
@@ -117,5 +118,22 @@ public class ServletStudent extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	// Update
+		private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			String nom = request.getParameter("nom");
+			String prenom = request.getParameter("prenom");
+			String email = request.getParameter("email");
+			String date = request.getParameter("date");
+			String classe = request.getParameter("classe");
+			
+			Student student = new Student(id, nom, prenom, email, date, classe);
+				studentDao.insertStudent(student);
+			response.sendRedirect("list");
+		}
+	
+	// Default	
 
 }
