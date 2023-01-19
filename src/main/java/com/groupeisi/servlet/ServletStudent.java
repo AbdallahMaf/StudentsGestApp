@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import com.groupeisi.dao.StudentDao;
 import com.groupeisi.entities.Student;
@@ -72,6 +73,7 @@ public class ServletStudent extends HttpServlet {
 			break; 
 			
 			default:
+				listStudent(request, response);
 				break;
 				
 		}
@@ -133,7 +135,19 @@ public class ServletStudent extends HttpServlet {
 				studentDao.insertStudent(student);
 			response.sendRedirect("list");
 		}
-	
-	// Default	
+		
+	// Default
+		private void listStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			try {
+				List<Student> listStudent = studentDao.selectAllStudents();
+				request.setAttribute("listStudent", listStudent);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("student-list.jsp");
+				dispatcher.forward(request, response);	
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 
 }
