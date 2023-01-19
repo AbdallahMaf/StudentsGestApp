@@ -9,4 +9,14 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>ServletStudent</display-name>
+    <servlet-name>ServletStudent</servlet-name>
+    <servlet-class>com.groupeisi.servlet.ServletStudent</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletStudent</servlet-name>
+    <url-pattern>/ServletStudent</url-pattern>
+  </servlet-mapping>
 </web-app>
