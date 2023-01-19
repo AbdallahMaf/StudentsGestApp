@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import jakarta.servlet.RequestDispatcher;
+
 /**
  * Servlet implementation class ServletStudent
  */
@@ -26,16 +28,8 @@ public class ServletStudent extends HttpServlet {
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
-	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	public void init() throws ServletException {
+		
 	}
 
 	/**
@@ -44,6 +38,41 @@ public class ServletStudent extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getServletPath();
+	switch(action) 
+	{
+	case "/new":
+		showNewForm(request, response);
+		break; 
+		
+	case "/insert":
+		break; 
+		
+	case "/delete":
+		break; 
+		
+	case "/edit":
+		break; 
+		
+	case "/update":
+		break; 
+		
+		default:
+			break;
+			
+	}
+	
+
+	private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("student-form.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 }
