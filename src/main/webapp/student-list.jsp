@@ -19,13 +19,13 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: blue">
 			<div>
-				<a href="https://www.xadmin.net" class="navbar-brand"> User
+				<a href="https://www.xadmin.net" class="navbar-brand"> Student
 					Management Application </a>
 			</div>
 
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/list"
-					class="nav-link">Users</a></li>
+					class="nav-link">Student List</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -46,25 +46,29 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th>Name</th>
+						<th>Identifiant</th>
+						<th>Nom</th>
+						<th>Prenom</th>
 						<th>Email</th>
-						<th>Country</th>
+						<th>Date</th>
+						<th>Classe</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 				
-					<c:forEach var="user" items="${listUser}">
+					<c:forEach var="user" items="${listStudent}">
 
 						<tr>
-							<td><c:out value="${user.id}" /></td>
-							<td><c:out value="${user.name}" /></td>
-							<td><c:out value="${user.email}" /></td>
-							<td><c:out value="${user.country}" /></td>
-							<td><a href="edit?id=<c:out value='${user.id}' />">Edit</a>
+							<td><c:out value="${student.id}" /></td>
+							<td><c:out value="${student.nom}" /></td>
+							<td><c:out value="${student.prenom}" /></td>
+							<td><c:out value="${student.email}" /></td>
+							<td><c:out value="${student.date}" /></td>
+							<td><c:out value="${student.classe}" /></td>
+							<td><a href="edit?id=<c:out value='${student.id}' />">Edit</a>
 								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?id=<c:out value='${user.id}' />">Delete</a></td>
+								href="delete?id=<c:out value='${student.id}' />">Delete</a></td>
 						</tr>
 					</c:forEach>
 		
